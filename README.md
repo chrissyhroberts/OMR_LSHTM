@@ -1,17 +1,194 @@
-# OMR Checker
-Grade exams fast and accurately using a scanner 🖨 or your phone 🤳. 
+### template.json structure
 
-[![HitCount](http://hits.dwyl.io/udayraj123/OMRchecker.svg)](http://hits.dwyl.io/udayraj123/OMRchecker)
-[![GitHub stars](https://img.shields.io/github/stars/Udayraj123/OMRChecker.svg?style=social&label=Stars✯)](https://GitHub.com/Udayraj123/OMRChecker/stargazers/)
+The template.json file describes the data collection form in a way that allows the software to look for marks in the right places, then to interpret them correctly as checked/unchecked.
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Udayraj123/OMRChecker/pull/new/master) <!-- [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://github.com/Udayraj123/OMRChecker/wiki/TODOs) -->
-[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/Udayraj123/OMRChecker.svg)](https://github.com/Udayraj123/OMRChecker/pulls?q=is%3Aclosed)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Udayraj123/OMRChecker.svg)](https://GitHub.com/Udayraj123/OMRChecker/issues?q=is%3Aissue+is%3Aclosed)
-[![GitHub contributors](https://img.shields.io/github/contributors/Udayraj123/OMRChecker.svg)](https://GitHub.com/Udayraj123/OMRChecker/graphs/contributors/)
+The overall structure of the template is as a series of blocks or lists
 
-[![Join](https://img.shields.io/badge/Join-Discord_group-purple.svg?style=flat-square)](https://discord.gg/qFv2Vqf)
-[![Ask me](https://img.shields.io/badge/Discuss-on_Github-purple.svg?style=flat-square)](https://github.com/Udayraj123/OMRChecker/issues/5)
-<!-- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/Udayraj123/a125b1531c61cceed5f06994329cba66/omrchecker-on-cloud.ipynb) -->
+```"Dimensions": []```  
+Describes the dimensions of the original form in pixels  
+```"BubbleDimensions": []```  
+Describes the dimensions of the checkboxes used in the form  
+```"Options": {}```  
+Tells the form whether to look for an edge marker and describes the width ratio between edge marker and form dimensions, for correct scaling.  
+
+```"Concatenations": {}```  
+Tells the form how to name and handle questions that should be saved in concatenated form  
+```"Singles": []```  
+Tells the form how to name and handle questions that have a single answer  
+```"QBlocks": {}```  
+Tells the form how to draw the various question blocks that will capture the marks  
+  
+
+
+#### "Dimensions": []
+
+The dimensions of the original form, between the centres of the edge markers should be given in the form `w,h`
+For a form with dimensions w = 1846, h = 1500 this would take the form
+
+```
+ "Dimensions": [
+    1846,
+    1500
+  ]
+```
+
+#### "BubbleDimensions": []
+
+The dimensions of the checkboxes should be given in the form `w,h`
+For a form with boxes of dimensions w = 20, h = 30 this would take the form
+
+```
+ "Dimensions": [
+    20,
+    30
+  ]
+```
+
+#### "Concatenations": {}
+
+Stuff inside this block will put together data from multiple data-entry boxes on the form
+
+format. For instance, the following will assign data to variable `FOO` by concatenating what's calculated from `bar1`, `bar2` and `bar3`, all of which might look across several checkboxes.
+
+
+```
+"FOO": [
+	"bar1",
+	"bar2",
+	"bar3"
+	]
+```
+
+#### Singles: {}
+
+Stuff inside this block will put grab a single datum from a single data entry box, or from one of several boxes
+
+For instance, the following will assign vairables called `bar1`,`bar2` and `bar3`, then assign a datum from matching Qblocks defined later.
+
+```
+"FOO": [
+	"bar1",
+	"bar2",
+	"bar3"
+	]
+```
+
+#### QBlocks
+
+The QBlocks tell the software where to look and what to look for. 
+
+Each QBlock has the basic format
+
+```
+  "Woo": {
+      "qType": "AQUESTIONTYPE",
+      "orig": [
+        208,
+        205
+      ],
+      "bigGaps": [
+        115,
+        11
+      ],
+      "gaps": [
+        59,
+        46
+      ],
+      "qNos": [
+        [
+          [
+            "Medium"
+          ]
+        ]
+      ]
+    }
+```
+where 
+`Woo` is an arbitrary name for the QBlock
+`AQUESTIONTYPE` maps to a predefined question type in the file `template.py`.
+`orig` is the origin of the question boxes
+`gaps` is the spacing between the left/upper edges of boxes of a single question the form `w,h`. i.e. add box size + gaps
+`qNos` maps the boxes to a variable name in the `concatenation` or `singles` block.
+`bigGaps` determines the gaps between the Qblocks 
+
+
+#### Defining question types inside template.py
+
+The basic format for defining a question is
+
+```
+    'QTYPE_FOO': {
+        'vals': ['E', 'H','D'],
+        'orient': 'V'
+    }
+```    
+
+where `QTYPE_FOO` is an arbitrary name that will be called from within the `template.json` file. See `AQUESTIONTYPE` above
+`orient` determines whether the boxes map vertically (`V`) or horizontally (`H`)
+
+`vals` is the list of values, i.e. mapping one-to-one with the boxes on the survey
+
+Basic options here are for
+
+discrete values
+```
+'vals': ['Yes','No','Unknown']
+```
+
+a range of n numerical values
+```
+'vals': range(10)
+```
+
+
+
+### Generic templates
+
+In the `templates` folder you'll find a template `generic_form_with_edge_markers` in a variety of formats.
+
+The generic template provided is based on a survey form with dimensions of w210 x h297 mm (A4, portrain) and resolution of 72 dpi
+This is 2480.3 x 3507.9 px
+
+The edge marker (target icons) are 100 x 100 px
+
+Overall width ratio of the paper to edge marker is 2480.3/100 = 24.83
+
+On the `template.json` file, the `SheetToMarkerWidthRatio` variable should be set to 24.83
+
+
+The edge markers are oriented from the top left corner [0,0] and centres are positioned at
+
+*top left  [150,150]
+*top right [2280,150]
+*lower left [150,3350]
+*lower right [2280,3350]
+
+The total workspace is therefore 
+
+w2130 x h3200 px 
+
+
+
+
+We found that making templates was a messy and difficult process that required lots of editing of JSON files, which most people don't get on with. 
+
+To address this, we've created a generic template that has 510 target boxes in a grid. 
+
+By simply removing specific questions from the `singles` block of the json file, the system will scan all 510 boxes, but save only ones that map to where you specify. 
+
+In the inputs/generic folder, the system scans and saves all results from fields 01-510
+In the inputs/generic2 folder, the system scans all 510 fields, but saves only 
+
+
+
+
+
+
+
+
+
+
+
 
 #### **TLDR;** Jump to [Getting Started](#getting-started).
 
