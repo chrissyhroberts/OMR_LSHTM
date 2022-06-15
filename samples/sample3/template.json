@@ -71,6 +71,8 @@
     "q22"
   ],
   "QBlocks": {
+  
+  
     "Medium": {
       "qType": "QTYPE_MED",
       "orig": [
@@ -78,7 +80,7 @@
         205
       ],
       "bigGaps": [
-        115,
+        230,
         11
       ],
       "gaps": [
@@ -93,6 +95,8 @@
         ]
       ]
     },
+    
+    
     "Roll": {
       "qType": "QTYPE_ROLL",
       "orig": [
@@ -123,6 +127,9 @@
         ]
       ]
     },
+    
+    
+    
     "Int1": {
       "qType": "QTYPE_INT",
       "orig": [
@@ -162,6 +169,9 @@
         ]
       ]
     },
+    
+    
+    
     "Mcq1": {
       "qType": "QTYPE_MCQ4",
       "orig": [
@@ -188,6 +198,9 @@
         ]
       ]
     },
+    
+    
+    
     "Mcq2": {
       "qType": "QTYPE_MCQ4",
       "orig": [
@@ -219,6 +232,9 @@
         ]
       ]
     },
+    
+    
+    
     "Mcq3": {
       "qType": "QTYPE_MCQ4",
       "orig": [
@@ -244,5 +260,10 @@
         ]
       ]
     }
+    
+    
+    
+    
+    
   }
 }

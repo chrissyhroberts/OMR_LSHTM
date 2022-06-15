@@ -1,0 +1,63 @@
+{
+    "Dimensions": [
+        740,
+        740
+    ],
+    "BubbleDimensions": [
+        63,
+        60
+    ],
+    
+    
+  "Options": {
+    "Marker": {
+      "RelativePath": "omr_marker.jpg",
+      "SheetToMarkerWidthRatio": 17
+    },
+    "OverrideFlags": {
+      "noCropping": true
+    }
+  },
+    
+    "Concatenations": {},
+    "Singles": [
+        "q1",
+        "q2",
+        "q3"
+       
+    ],
+    "QBlocks": {
+
+
+
+        "MCQBlock1": {
+            "qType": "QTYPE_INT_11",
+            "orig": [
+                193,
+                100
+            ],
+            "qNos": [
+                [
+                    [
+                        "q1",
+                        "q2",
+                        "q3"
+                    ]
+                ]
+            ],
+            "gaps": [
+                60,
+                61
+            ],
+            "bigGaps": [
+                50,
+                50
+            ]
+        }
+        
+        
+    }
+}
+
+
+

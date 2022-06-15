@@ -45,44 +45,16 @@ class QBlock():
 
 
 qtype_data = {
-    'QTYPE_MED': {
-        'vals': ['E', 'H'],
-        'orient': 'V'
-    },
-    'QTYPE_ROLL': {
-        'vals': range(10),
-        'orient': 'V'
-    },
-    'QTYPE_INT': {
-        'vals': range(10),
-        'orient': 'V'
-    },
-    'QTYPE_INT_11': {
-        'vals': range(11),
-        'orient': 'V'
-    },
-    'QTYPE_INT4': {
-        'vals': [1,2,3,0],
-        'orient': 'V'
-    },
-    'QTYPE_MCQ4': {
-        'vals': ['A', 'B', 'C', 'D'],
+
+    'box.checked': {
+        'vals': ['TRUE'],
         'orient': 'H'
     },
-    'QTYPE_MCQ5': {
-        'vals': ['A', 'B', 'C', 'D', 'E'],
+    'num.horz.30': {
+        'vals': range(10),
         'orient': 'H'
-    },
-    # Add custom question types here-
-    # ,
-    # 'QTYPE_MCQ_COL_5A':{'vals' : ['A']*5, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_5B':{'vals' : ['B']*5, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_5C':{'vals' : ['C']*5, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_5D':{'vals' : ['D']*5, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_4A':{'vals' : ['A']*4, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_4B':{'vals' : ['B']*4, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_4C':{'vals' : ['C']*4, 'orient':'V'},
-    # 'QTYPE_MCQ_COL_4D':{'vals' : ['D']*4, 'orient':'V'},
+    }
+    
 }
 
 
