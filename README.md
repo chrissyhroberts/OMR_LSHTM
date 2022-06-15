@@ -43,9 +43,12 @@ For a form with boxes of dimensions w = 20, h = 30 this would take the form
   ]
 ```
 
-Stuff inside '  "Concatenations: {}' block will put together data from multiple data-entry boxes on the form
+#### "Concatenations": {}
 
-format
+Stuff inside this block will put together data from multiple data-entry boxes on the form
+
+format. For instance, the following will assign data to variable `FOO` by concatenating what's calculated from `bar1`, `bar2` and `bar3`, all of which might look across several checkboxes.
+
 
 ```
 "FOO": [
@@ -55,12 +58,11 @@ format
 	]
 ```
 
-Will assign data to variable `FOO` by concatenating what's in boxes `bar1`, `bar2` and `bar3`
+#### Singles: {}
 
+Stuff inside this block will put grab a single datum from a single data entry box, or from one of several boxes
 
-Stuff inside '  "Singles: {}' block will put grab a datum from a single data entry box
-
-format
+For instance, the following will assign vairables called `bar1`,`bar2` and `bar3`, then assign a datum from matching Qblocks defined later.
 
 ```
 "FOO": [
@@ -70,7 +72,11 @@ format
 	]
 ```
 
-Will assign data to variable `FOO` by concatenating what's in boxes `bar1`, `bar2` and `bar3`
+
+
+
+
+
 
 
 
