@@ -1,4 +1,4 @@
-###template.json structure
+### template.json structure
 
 The template.json file describes the data collection form in a way that allows the software to look for marks in the right places, then to interpret them correctly as checked/unchecked.
 
@@ -19,7 +19,29 @@ Tells the form how to draw the various question blocks that will capture the mar
   
 
 
+#### "Dimensions": []
 
+The dimensions of the original form jpeg should be given in the form `w,h`
+For a form with dimensions w = 1846, h = 1500 this would take the form
+
+```
+ "Dimensions": [
+    1846,
+    1500
+  ]
+```
+
+#### "BubbleDimensions": []
+
+The dimensions of the checkboxes should be given in the form `w,h`
+For a form with boxes of dimensions w = 20, h = 30 this would take the form
+
+```
+ "Dimensions": [
+    20,
+    30
+  ]
+```
 
 Stuff inside '  "Concatenations: {}' block will put together data from multiple data-entry boxes on the form
 
