@@ -1,184 +1,27 @@
-### template.json structure
+### About this fork
 
-The template.json file describes the data collection form in a way that allows the software to look for marks in the right places, then to interpret them correctly as checked/unchecked.
+This project is a fork of code available [here](https://github.com/Udayraj123/OMRChecker).  
 
-The overall structure of the template is as a series of blocks or lists
+The aim of this project is to provide a simple method for designing and deploying optical mark recognition for automatically reading form data from surveys, exams and other paper objects with checkboxes.
 
-```"Dimensions": []```  
-Describes the dimensions of the original form in pixels  
-```"BubbleDimensions": []```  
-Describes the dimensions of the checkboxes used in the form  
-```"Options": {}```  
-Tells the form whether to look for an edge marker and describes the width ratio between edge marker and form dimensions, for correct scaling.  
+To run the software you will need to know how to run a python script (see below installation instructions) but don't really need coding skills beyond that.
 
-```"Concatenations": {}```  
-Tells the form how to name and handle questions that should be saved in concatenated form  
-```"Singles": []```  
-Tells the form how to name and handle questions that have a single answer  
-```"QBlocks": {}```  
-Tells the form how to draw the various question blocks that will capture the marks  
-  
+We found that making a new template for each survey was a messy and difficult process that required lots of editing of JSON files, which most people don't get on with. 
+
+To address this, we've created a generic template that has 510 target boxes in a grid. By simply removing specific questions from the `singles` block of the `template.json` file, the system will scan all 510 boxes, but save only ones that map to where you specify. 
+
+In the inputs/generic folder, you'll find an example where the system scans and saves all results from fields 01-510
+
+In the inputs/generic2 folder, the system scans all 510 fields, but saves only the ones linked to the boxes on the example form about school meals and menstruation. In the outputs/generic_example folder, you'll find a csv file with the results. The headers relate to the coordinates of the original 510 field grid, so to decode which column is which, you'll need to keep a key file such as the one in the templates/ folder.
 
 
-#### "Dimensions": []
+#### instructions for making a new survey
 
-The dimensions of the original form, between the centres of the edge markers should be given in the form `w,h`
-For a form with dimensions w = 1846, h = 1500 this would take the form
+To do this, we recommend using something like Affinity Designer, which is awesome and costs only about $50
 
-```
- "Dimensions": [
-    1846,
-    1500
-  ]
-```
+Open the template to see where boxes can go 
 
-#### "BubbleDimensions": []
-
-The dimensions of the checkboxes should be given in the form `w,h`
-For a form with boxes of dimensions w = 20, h = 30 this would take the form
-
-```
- "Dimensions": [
-    20,
-    30
-  ]
-```
-
-#### "Concatenations": {}
-
-Stuff inside this block will put together data from multiple data-entry boxes on the form
-
-format. For instance, the following will assign data to variable `FOO` by concatenating what's calculated from `bar1`, `bar2` and `bar3`, all of which might look across several checkboxes.
-
-
-```
-"FOO": [
-	"bar1",
-	"bar2",
-	"bar3"
-	]
-```
-
-#### Singles: {}
-
-Stuff inside this block will put grab a single datum from a single data entry box, or from one of several boxes
-
-For instance, the following will assign vairables called `bar1`,`bar2` and `bar3`, then assign a datum from matching Qblocks defined later.
-
-```
-"FOO": [
-	"bar1",
-	"bar2",
-	"bar3"
-	]
-```
-
-#### QBlocks
-
-The QBlocks tell the software where to look and what to look for. 
-
-Each QBlock has the basic format
-
-```
-  "Woo": {
-      "qType": "AQUESTIONTYPE",
-      "orig": [
-        208,
-        205
-      ],
-      "bigGaps": [
-        115,
-        11
-      ],
-      "gaps": [
-        59,
-        46
-      ],
-      "qNos": [
-        [
-          [
-            "Medium"
-          ]
-        ]
-      ]
-    }
-```
-where 
-`Woo` is an arbitrary name for the QBlock
-`AQUESTIONTYPE` maps to a predefined question type in the file `template.py`.
-`orig` is the origin of the question boxes
-`gaps` is the spacing between the left/upper edges of boxes of a single question the form `w,h`. i.e. add box size + gaps
-`qNos` maps the boxes to a variable name in the `concatenation` or `singles` block.
-`bigGaps` determines the gaps between the Qblocks 
-
-
-#### Defining question types inside template.py
-
-The basic format for defining a question is
-
-```
-    'QTYPE_FOO': {
-        'vals': ['E', 'H','D'],
-        'orient': 'V'
-    }
-```    
-
-where `QTYPE_FOO` is an arbitrary name that will be called from within the `template.json` file. See `AQUESTIONTYPE` above
-`orient` determines whether the boxes map vertically (`V`) or horizontally (`H`)
-
-`vals` is the list of values, i.e. mapping one-to-one with the boxes on the survey
-
-Basic options here are for
-
-discrete values
-```
-'vals': ['Yes','No','Unknown']
-```
-
-a range of n numerical values
-```
-'vals': range(10)
-```
-
-
-
-### Generic templates
-
-In the `templates` folder you'll find a template `generic_form_with_edge_markers` in a variety of formats.
-
-The generic template provided is based on a survey form with dimensions of w210 x h297 mm (A4, portrain) and resolution of 72 dpi
-This is 2480.3 x 3507.9 px
-
-The edge marker (target icons) are 100 x 100 px
-
-Overall width ratio of the paper to edge marker is 2480.3/100 = 24.83
-
-On the `template.json` file, the `SheetToMarkerWidthRatio` variable should be set to 24.83
-
-
-The edge markers are oriented from the top left corner [0,0] and centres are positioned at
-
-*top left  [150,150]
-*top right [2280,150]
-*lower left [150,3350]
-*lower right [2280,3350]
-
-The total workspace is therefore 
-
-w2130 x h3200 px 
-
-
-
-
-We found that making templates was a messy and difficult process that required lots of editing of JSON files, which most people don't get on with. 
-
-To address this, we've created a generic template that has 510 target boxes in a grid. 
-
-By simply removing specific questions from the `singles` block of the json file, the system will scan all 510 boxes, but save only ones that map to where you specify. 
-
-In the inputs/generic folder, the system scans and saves all results from fields 01-510
-In the inputs/generic2 folder, the system scans all 510 fields, but saves only 
-
+![a](https://github.com/chrissyhroberts/OMR_LSHTM/img/omr_marker.jpg)
 
 
 
@@ -353,6 +196,181 @@ Low Quality Dataset(For CV Based methods)) (1.5 GB)
 Standard Quality Dataset(For ML Based methods) (3 GB)
 High Quality Dataset(For custom processing) (6 GB) 
 -->
+
+
+### template.json structure
+
+The template.json file describes the data collection form in a way that allows the software to look for marks in the right places, then to interpret them correctly as checked/unchecked.
+
+The overall structure of the template is as a series of blocks or lists
+
+```"Dimensions": []```  
+Describes the dimensions of the original form in pixels  
+```"BubbleDimensions": []```  
+Describes the dimensions of the checkboxes used in the form  
+```"Options": {}```  
+Tells the form whether to look for an edge marker and describes the width ratio between edge marker and form dimensions, for correct scaling.  
+
+```"Concatenations": {}```  
+Tells the form how to name and handle questions that should be saved in concatenated form  
+```"Singles": []```  
+Tells the form how to name and handle questions that have a single answer  
+```"QBlocks": {}```  
+Tells the form how to draw the various question blocks that will capture the marks  
+  
+
+
+#### "Dimensions": []
+
+The dimensions of the original form, between the centres of the edge markers should be given in the form `w,h`
+For a form with dimensions w = 1846, h = 1500 this would take the form
+
+```
+ "Dimensions": [
+    1846,
+    1500
+  ]
+```
+
+#### "BubbleDimensions": []
+
+The dimensions of the checkboxes should be given in the form `w,h`
+For a form with boxes of dimensions w = 20, h = 30 this would take the form
+
+```
+ "Dimensions": [
+    20,
+    30
+  ]
+```
+
+#### "Concatenations": {}
+
+Stuff inside this block will put together data from multiple data-entry boxes on the form
+
+format. For instance, the following will assign data to variable `FOO` by concatenating what's calculated from `bar1`, `bar2` and `bar3`, all of which might look across several checkboxes.
+
+
+```
+"FOO": [
+	"bar1",
+	"bar2",
+	"bar3"
+	]
+```
+
+#### Singles: {}
+
+Stuff inside this block will put grab a single datum from a single data entry box, or from one of several boxes
+
+For instance, the following will assign vairables called `bar1`,`bar2` and `bar3`, then assign a datum from matching Qblocks defined later.
+
+```
+"FOO": [
+	"bar1",
+	"bar2",
+	"bar3"
+	]
+```
+
+#### QBlocks
+
+The QBlocks tell the software where to look and what to look for. 
+
+Each QBlock has the basic format
+
+```
+  "Woo": {
+      "qType": "AQUESTIONTYPE",
+      "orig": [
+        208,
+        205
+      ],
+      "bigGaps": [
+        115,
+        11
+      ],
+      "gaps": [
+        59,
+        46
+      ],
+      "qNos": [
+        [
+          [
+            "Medium"
+          ]
+        ]
+      ]
+    }
+```
+where 
+`Woo` is an arbitrary name for the QBlock
+`AQUESTIONTYPE` maps to a predefined question type in the file `template.py`.
+`orig` is the origin of the question boxes
+`gaps` is the spacing between the left/upper edges of boxes of a single question the form `w,h`. i.e. add box size + gaps
+`qNos` maps the boxes to a variable name in the `concatenation` or `singles` block.
+`bigGaps` determines the gaps between the Qblocks 
+
+
+#### Defining question types inside template.py
+
+The basic format for defining a question is
+
+```
+    'QTYPE_FOO': {
+        'vals': ['E', 'H','D'],
+        'orient': 'V'
+    }
+```    
+
+where `QTYPE_FOO` is an arbitrary name that will be called from within the `template.json` file. See `AQUESTIONTYPE` above
+`orient` determines whether the boxes map vertically (`V`) or horizontally (`H`)
+
+`vals` is the list of values, i.e. mapping one-to-one with the boxes on the survey
+
+Basic options here are for
+
+discrete values
+```
+'vals': ['Yes','No','Unknown']
+```
+
+a range of n numerical values
+```
+'vals': range(10)
+```
+
+#### About the generic template
+
+
+
+In the `templates` folder you'll find a template `generic_form_with_edge_markers` in a variety of formats.
+
+The generic template provided is based on a survey form with dimensions of w210 x h297 mm (A4, portrain) and resolution of 72 dpi
+This is 2480.3 x 3507.9 px
+
+The edge marker (target icons) are 100 x 100 px
+
+Overall width ratio of the paper to edge marker is 2480.3/100 = 24.83
+
+On the `template.json` file, the `SheetToMarkerWidthRatio` variable should be set to 24.83
+
+
+The edge markers are oriented from the top left corner [0,0] and centres are positioned at
+
+*top left  [150,150]
+*top right [2280,150]
+*lower left [150,3350]
+*lower right [2280,3350]
+
+The total workspace is therefore 
+
+w2130 x h3200 px 
+
+
+
+
+
 
 ## FAQ 
 
