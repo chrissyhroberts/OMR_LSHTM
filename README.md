@@ -22,7 +22,7 @@ Tells the form how to draw the various question blocks that will capture the mar
 
 #### "Dimensions": []
 
-The dimensions of the original form jpeg should be given in the form `w,h`
+The dimensions of the original form, between the centres of the edge markers should be given in the form `w,h`
 For a form with dimensions w = 1846, h = 1500 this would take the form
 
 ```
@@ -107,7 +107,7 @@ where
 `Woo` is an arbitrary name for the QBlock
 `AQUESTIONTYPE` maps to a predefined question type in the file `template.py`.
 `orig` is the origin of the question boxes
-`gaps` is the spacing between the boxes of a single question the form `w,h`
+`gaps` is the spacing between the left/upper edges of boxes of a single question the form `w,h`. i.e. add box size + gaps
 `qNos` maps the boxes to a variable name in the `concatenation` or `singles` block.
 `bigGaps` determines the gaps between the Qblocks 
 
@@ -146,7 +146,7 @@ a range of n numerical values
 
 In the `templates` folder you'll find a template `generic_form_with_edge_markers` in a variety of formats.
 
-The generic template provided is based on a survey form with dimensions of w210 x h297 mm (A4, portrain) and resolution of 300 dpi
+The generic template provided is based on a survey form with dimensions of w210 x h297 mm (A4, portrain) and resolution of 72 dpi
 This is 2480.3 x 3507.9 px
 
 The edge marker (target icons) are 100 x 100 px
@@ -168,41 +168,16 @@ The total workspace is therefore
 w2130 x h3200 px 
 
 
-The empty template for `template.json` is
 
-```
-{
-  "Dimensions": [
-    2481,
-    3508
-  ],
-  "BubbleDimensions": [
-    50,
-    50
-  ],
-  "Options": {
-    "Marker": {
-      "RelativePath": "omr_marker.jpg",
-      "SheetToMarkerWidthRatio": 24.83
-    },
-    "OverrideFlags":{
-      "noCropping": true
-    }
-  },
-  "Concatenations": {
-      },
-  
-  
-  "Singles": [
- 
-  ],
-  
-  
-  
-  "QBlocks": {
-}
-```
 
+We found that making templates was a messy and difficult process that required lots of editing of JSON files, which most people don't get on with. 
+
+To address this, we've created a generic template that has 510 target boxes in a grid. 
+
+By simply removing specific questions from the `singles` block of the json file, the system will scan all 510 boxes, but save only ones that map to where you specify. 
+
+In the inputs/generic folder, the system scans and saves all results from fields 01-510
+In the inputs/generic2 folder, the system scans all 510 fields, but saves only 
 
 
 
