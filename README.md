@@ -15,45 +15,89 @@ In the inputs/generic folder, you'll find an example where the system scans and 
 In the inputs/generic2 folder, the system scans all 510 fields, but saves only the ones linked to the boxes on the example form about school meals and menstruation. In the outputs/generic_example folder, you'll find a csv file with the results. The headers relate to the coordinates of the original 510 field grid, so to decode which column is which, you'll need to keep a key file such as the one in the templates/ folder.
 
 
-#### instructions for making a new survey
+### instructions for making a new survey
 
 To do this, we recommend using something like Affinity Designer, which is awesome and costs only about $50
 
-Open the template to see where boxes can go 
+Open the template to see where boxes can go. As you can see, the numbering runs from Q1 (top left) going down the columns and then right until Q510 (bottom right). 
 
-![a](https://github.com/chrissyhroberts/OMR_LSHTM/img/omr_marker.jpg)
+![a](./img/generic_form_with_edge_markers.jpg)
 
+In the generic example, shown below, we use only some of the boxes so have deleted the ones we didn't want from the template file. You can add a load of text and images but 
 
+* don't put text or images too close to the edge marks
+* or in lines of sight from one edge mark to another
+* don't put any text or imagery inside the checkboxes that you want to use
 
-
-
-
-
-
-
-
-
-#### **TLDR;** Jump to [Getting Started](#getting-started).
+![a](./img/generic_form_example.jpg)
 
 
-## 🎯 Features
+the boxes in this survey relate to specific boxes on the template
 
-A full-fledged OMR checking software that can read and evaluate OMR sheets scanned at any angle and having any color. Support is also provided for a customisable marking scheme with section-wise marking, bonus questions, etc.
+![a](./img/q.key.png)
 
-| Specs <img width=200/>   | ![Current_Speed](https://img.shields.io/badge/Speed-200_OMRs/m-blue.svg?style=flat-square) ![Current_Size](https://img.shields.io/badge/Code_Size-500KB-blue.svg?style=flat-square)  ![Min Resolution](https://img.shields.io/badge/Min_Resolution-640x480-blue.svg?style=flat-square) <img width=200/>    |
-| :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 💯 **Accurate**      | Currently nearly 100% accurate on good quality document scans; and about 90% accurate on mobile images.                                                                                                                                                                                |
-| 💪🏿 **Robust**        | Supports low resolution, xeroxed sheets. See [**Robustness**](https://github.com/Udayraj123/OMRChecker/wiki/Robustness) for more.                                                                                                                                                      |
-| ⏩ **Fast**          | Current processing speed without any optimization is 200 OMRs/minute.                                                                                                                                                                                                                  |
-| ✅ **Extensible**    | [Easily apply](https://github.com/Udayraj123/OMRChecker/wiki/User-Guide) to different OMR layouts, surveys, etc.                                                                                                                                                                   |
-| 📊 **Visually Rich** | [Get insights](https://github.com/Udayraj123/OMRChecker/wiki/Rich-Visuals) to configure and debug easily.                                                                                                                                                                              |
-| 🎈 **Lightweight**   | Core code size(excluding images) is **less than 500 KB**.                                                                                                                                                                                                                              |
-| 🏫 **Large Scale**   | Tested on a large scale at [Technothlon](https://www.facebook.com/technothlon.techniche).                                                                                                                                                                                         |
-| 👩🏿‍💻 **Dev Friendly**  | [Pylinted](http://pylint.pycqa.org/) and [Black formatted](https://github.com/psf/black) code (check [dev branch](https://github.com/Udayraj123/OMRChecker/tree/dev) for latest code). Also has a [developer community](https://discord.gg/qFv2Vqf) on discord.                                                                             |
+and to tell the `template.json` only to capture those boxes, we simply add only those questions to the 'singles' section, leaving the rest of the JSON file as it was
 
-Note: For solving interesting challenges, developers can checkout [**Dev Branch**](https://github.com/Udayraj123/OMRChecker/tree/dev) and [**TODOs**](https://github.com/Udayraj123/OMRChecker/wiki/TODOs). 
+```  
+  "Singles": [
 
-See complete guide and details at [Project Wiki](https://github.com/Udayraj123/OMRChecker/wiki/).
+"Q31",
+"Q61",
+"Q91",
+"Q121",
+"Q273",
+"Q333",
+"Q274",
+"Q334",
+"Q10",
+ "Q11",
+ "Q12",
+ "Q13",
+ "Q14",
+ "Q15",
+ "Q16",
+ "Q17",
+ "Q18",
+ "Q19",
+ "Q20"
+
+  ],
+  ```
+  
+  
+Finally we can create a dummy 'complete' form and run the software to capture data
+
+![a](./img/generic_form_example_completed.jpg)
+
+
+As you will see in the outputs folder, the software still scans all 510 positions and detects darker areas (i.e. marks) in non-relevant sections of the form (look around the photo)
+
+![a](./img/generic_example_generic_form_example_completed.jpg)
+
+but it captures only the ones we want in the csv file
+
+![a](./img/results.png)
+
+Note that these results are sorted by question name and the column headers don't tell you which question is which box. You'll need to rename variables using a decode file (like the list above). 
+
+Here, Q12 is positive. Looking at our decode list, that tells us that it is week 3.
+Q61 is positive, meaning that the subject ate little today.
+Q273 is positive, 
+
+Note also that the way this works is that a field is either TRUE or NA. In downstream software (i.e. R) you'll want to replace NAs with FALSE.
+You may also need to do some funky stuff with variables. In the example we have four possible answers to the 'have you eaten today?' question, but the responses are stored in four separate answers. You'll need to mutate the data set to get a new variable that summarises which of the four answers are given. In R this would involve
+
+* binding the variable names on to the generic question IDs
+* using `case_when` to mutate the data appropriately
+
+The overall approach we've taken puts very little emphasis on fiddling around with the JSON files for the OMR stage and instead requires you to perform all the munging and data sanity stuff in more familiar software like R. 
+
+
+
+
+
+
+
 
 <!-- 💁🏿‍♂️ **User Friendly** - WIP, Help by contributing! -->
 ## 💡 What can OMRChecker do for me?
