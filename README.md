@@ -1,3 +1,110 @@
+###template.json structure
+
+The template.json file describes the data collection form in a way that allows the software to look for marks in the right places, then to interpret them correctly as checked/unchecked.
+
+The overall structure of the template is as a series of blocks or lists
+
+```"Dimensions": []```  
+Describes the dimensions of the original form in pixels  
+```"BubbleDimensions": []```  
+Describes the dimensions of the checkboxes used in the form  
+```"Options": {}```  
+Tells the form whether to look for an edge marker and describes the width ratio between edge marker and form dimensions, for correct scaling  
+```"Concatenations": {}```  
+Tells the form how to name and handle questions that should be saved in concatenated form  
+```"Singles": []```  
+Tells the form how to name and handle questions that have a single answer  
+```"QBlocks": {}```  
+Tells the form how to draw the various question blocks that will capture the marks  
+  
+
+
+
+
+Stuff inside '  "Concatenations: {}' block will put together data from multiple data-entry boxes on the form
+
+format
+
+```
+"FOO": [
+	"bar1",
+	"bar2",
+	"bar3"
+	]
+```
+
+Will assign data to variable `FOO` by concatenating what's in boxes `bar1`, `bar2` and `bar3`
+
+
+Stuff inside '  "Singles: {}' block will put grab a datum from a single data entry box
+
+format
+
+```
+"FOO": [
+	"bar1",
+	"bar2",
+	"bar3"
+	]
+```
+
+Will assign data to variable `FOO` by concatenating what's in boxes `bar1`, `bar2` and `bar3`
+
+
+
+
+### JSON arguments
+
+    Input(Directly passable from JSON parameters):
+    bubbleDims - dimesions of single QBox
+    orig- start point of QBox
+    qNos - an array of qNos tuples(see below) that align with dimension of the big grid (gridDims extracted from here)
+    bigGaps - (bigGapX,bigGapY) are the gaps between blocks
+    gaps - (gapX,gapY) are the gaps between rows and cols in a block
+    vals - a 1D array of values of each alternative for a question
+    orient - The way of arranging the vals (vertical or horizontal)
+
+    Output:
+    // Returns an array of Q objects (having their points) arranged in a rectangular grid
+    Returns grid of QBlock objects
+
+                                00    00    00    00
+   Q1   1 2 3 4    1 2 3 4      11    11    11    11
+   Q2   1 2 3 4    1 2 3 4      22    22    22    22         1234567
+   Q3   1 2 3 4    1 2 3 4      33    33    33    33         1234567
+                                44    44    44    44
+                            ,   55    55    55    55    ,    1234567                       and many more possibilities!
+   Q7   1 2 3 4    1 2 3 4      66    66    66    66         1234567
+   Q8   1 2 3 4    1 2 3 4      77    77    77    77
+   Q9   1 2 3 4    1 2 3 4      88    88    88    88
+                                99    99    99    99
+
+TODO: Update this part, add more examples like-
+    Q1  1 2 3 4
+
+    Q2  1 2 3 4
+    Q3  1 2 3 4
+
+    Q4  1 2 3 4
+    Q5  1 2 3 4
+
+    MCQ type (orient='H')-
+        [
+            [(q1,q2,q3),(q4,q5,q6)]
+            [(q7,q8,q9),(q10,q11,q12)]
+        ]
+
+    INT type (orient='V')-
+        [
+            [(q1d1,q1d2),(q2d1,q2d2),(q3d1,q3d2),(q4d1,q4d2)]
+        ]
+
+    ROLL type-
+        [
+            [(roll1,roll2,roll3,...,roll10)]
+        ]
+
+
 # OMR Checker
 Grade exams fast and accurately using a scanner 🖨 or your phone 🤳. 
 
