@@ -144,13 +144,72 @@ a range of n numerical values
 
 ### Generic templates
 
-The generic templates provided are based on a survey form with dimensions of 210 x 297 mm (A4) and resolution of 300 dpi
+In the `templates` folder you'll find a template `generic_form_with_edge_markers` in a variety of formats.
+
+The generic template provided is based on a survey form with dimensions of w210 x h297 mm (A4, portrain) and resolution of 300 dpi
 This is 2480.3 x 3507.9 px
 
 The edge marker (target icons) are 100 x 100 px
 
 Overall width ratio of the paper to edge marker is 2480.3/100 = 24.83
+
 On the `template.json` file, the `SheetToMarkerWidthRatio` variable should be set to 24.83
+
+
+The edge markers are oriented from the top left corner [0,0] and centres are positioned at
+
+*top left  [150,150]
+*top right [2280,150]
+*lower left [150,3350]
+*lower right [2280,3350]
+
+The total workspace is therefore 
+
+w2130 x h3200 px 
+
+
+The empty template for `template.json` is
+
+```
+{
+  "Dimensions": [
+    2481,
+    3508
+  ],
+  "BubbleDimensions": [
+    50,
+    50
+  ],
+  "Options": {
+    "Marker": {
+      "RelativePath": "omr_marker.jpg",
+      "SheetToMarkerWidthRatio": 24.83
+    },
+    "OverrideFlags":{
+      "noCropping": true
+    }
+  },
+  "Concatenations": {
+      },
+  
+  
+  "Singles": [
+ 
+  ],
+  
+  
+  
+  "QBlocks": {
+}
+```
+
+
+
+
+
+
+
+
 
 
 
