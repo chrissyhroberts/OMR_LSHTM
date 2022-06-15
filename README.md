@@ -9,7 +9,8 @@ Describes the dimensions of the original form in pixels
 ```"BubbleDimensions": []```  
 Describes the dimensions of the checkboxes used in the form  
 ```"Options": {}```  
-Tells the form whether to look for an edge marker and describes the width ratio between edge marker and form dimensions, for correct scaling  
+Tells the form whether to look for an edge marker and describes the width ratio between edge marker and form dimensions, for correct scaling.  
+
 ```"Concatenations": {}```  
 Tells the form how to name and handle questions that should be saved in concatenated form  
 ```"Singles": []```  
@@ -72,81 +73,88 @@ For instance, the following will assign vairables called `bar1`,`bar2` and `bar3
 	]
 ```
 
+#### QBlocks
 
+The QBlocks tell the software where to look and what to look for. 
 
+Each QBlock has the basic format
 
-
-
-
-
-
-
-### JSON arguments
-
-    Input(Directly passable from JSON parameters):
-    bubbleDims - dimesions of single QBox
-    orig- start point of QBox
-    qNos - an array of qNos tuples(see below) that align with dimension of the big grid (gridDims extracted from here)
-    bigGaps - (bigGapX,bigGapY) are the gaps between blocks
-    gaps - (gapX,gapY) are the gaps between rows and cols in a block
-    vals - a 1D array of values of each alternative for a question
-    orient - The way of arranging the vals (vertical or horizontal)
-
-    Output:
-    // Returns an array of Q objects (having their points) arranged in a rectangular grid
-    Returns grid of QBlock objects
-
-                                00    00    00    00
-   Q1   1 2 3 4    1 2 3 4      11    11    11    11
-   Q2   1 2 3 4    1 2 3 4      22    22    22    22         1234567
-   Q3   1 2 3 4    1 2 3 4      33    33    33    33         1234567
-                                44    44    44    44
-                            ,   55    55    55    55    ,    1234567                       and many more possibilities!
-   Q7   1 2 3 4    1 2 3 4      66    66    66    66         1234567
-   Q8   1 2 3 4    1 2 3 4      77    77    77    77
-   Q9   1 2 3 4    1 2 3 4      88    88    88    88
-                                99    99    99    99
-
-TODO: Update this part, add more examples like-
-    Q1  1 2 3 4
-
-    Q2  1 2 3 4
-    Q3  1 2 3 4
-
-    Q4  1 2 3 4
-    Q5  1 2 3 4
-
-    MCQ type (orient='H')-
+```
+  "Woo": {
+      "qType": "AQUESTIONTYPE",
+      "orig": [
+        208,
+        205
+      ],
+      "bigGaps": [
+        115,
+        11
+      ],
+      "gaps": [
+        59,
+        46
+      ],
+      "qNos": [
         [
-            [(q1,q2,q3),(q4,q5,q6)]
-            [(q7,q8,q9),(q10,q11,q12)]
+          [
+            "Medium"
+          ]
         ]
+      ]
+    }
+```
+where 
+`Woo` is an arbitrary name for the QBlock
+`AQUESTIONTYPE` maps to a predefined question type in the file `template.py`.
+`orig` is the origin of the question boxes
+`gaps` is the spacing between the boxes of a single question the form `w,h`
+`qNos` maps the boxes to a variable name in the `concatenation` or `singles` block.
+`bigGaps` determines the gaps between the Qblocks 
 
-    INT type (orient='V')-
-        [
-            [(q1d1,q1d2),(q2d1,q2d2),(q3d1,q3d2),(q4d1,q4d2)]
-        ]
 
-    ROLL type-
-        [
-            [(roll1,roll2,roll3,...,roll10)]
-        ]
+#### Defining question types inside template.py
+
+The basic format for defining a question is
+
+```
+    'QTYPE_FOO': {
+        'vals': ['E', 'H','D'],
+        'orient': 'V'
+    }
+```    
+
+where `QTYPE_FOO` is an arbitrary name that will be called from within the `template.json` file. See `AQUESTIONTYPE` above
+`orient` determines whether the boxes map vertically (`V`) or horizontally (`H`)
+
+`vals` is the list of values, i.e. mapping one-to-one with the boxes on the survey
+
+Basic options here are for
+
+discrete values
+```
+'vals': ['Yes','No','Unknown']
+```
+
+a range of n numerical values
+```
+'vals': range(10)
+```
 
 
-# OMR Checker
-Grade exams fast and accurately using a scanner 🖨 or your phone 🤳. 
 
-[![HitCount](http://hits.dwyl.io/udayraj123/OMRchecker.svg)](http://hits.dwyl.io/udayraj123/OMRchecker)
-[![GitHub stars](https://img.shields.io/github/stars/Udayraj123/OMRChecker.svg?style=social&label=Stars✯)](https://GitHub.com/Udayraj123/OMRChecker/stargazers/)
+### Generic templates
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Udayraj123/OMRChecker/pull/new/master) <!-- [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://github.com/Udayraj123/OMRChecker/wiki/TODOs) -->
-[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/Udayraj123/OMRChecker.svg)](https://github.com/Udayraj123/OMRChecker/pulls?q=is%3Aclosed)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Udayraj123/OMRChecker.svg)](https://GitHub.com/Udayraj123/OMRChecker/issues?q=is%3Aissue+is%3Aclosed)
-[![GitHub contributors](https://img.shields.io/github/contributors/Udayraj123/OMRChecker.svg)](https://GitHub.com/Udayraj123/OMRChecker/graphs/contributors/)
+The generic templates provided are based on a survey form with dimensions of 210 x 297 mm (A4) and resolution of 300 dpi
+This is 2480.3 x 3507.9 px
 
-[![Join](https://img.shields.io/badge/Join-Discord_group-purple.svg?style=flat-square)](https://discord.gg/qFv2Vqf)
-[![Ask me](https://img.shields.io/badge/Discuss-on_Github-purple.svg?style=flat-square)](https://github.com/Udayraj123/OMRChecker/issues/5)
-<!-- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/Udayraj123/a125b1531c61cceed5f06994329cba66/omrchecker-on-cloud.ipynb) -->
+The edge marker (target icons) are 100 x 100 px
+
+Overall width ratio of the paper to edge marker is 2480.3/100 = 24.83
+On the `template.json` file, the `SheetToMarkerWidthRatio` variable should be set to 24.83
+
+
+
+
 
 #### **TLDR;** Jump to [Getting Started](#getting-started).
 
