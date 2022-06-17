@@ -434,53 +434,10 @@ The only requirement is **disclose usage** of this software in your code.
 
 It is published under the GPLv3 license.
 
-## Credits 
-_A Huge thanks to :_
-_**Adrian Rosebrock** for his exemplary blog :_ https://pyimagesearch.com 
+## Acknowledgments 
 
-_**Harrison Kinsley** aka sentdex for his [video tutorials](https://www.youtube.com/watch?v=Z78zbnLlPUA&list=PLQVvvaa0QuDdttJXlLtAJxJetJcqmqlQq) and many other resources._
-
-_**Satya Mallic** for his resourceful blog:_ https://www.learnopencv.com
-
-_And to other amazing people from all over the globe who've made significant improvements in this project. Thank you!_
-
-
-<!-- 
-OpencV
-matplotlib
-some SO answers from roughworks
-prof
--->
-
-## Related Projects
-Here's a sneak peak of the [Android OMR Helper App (WIP)](https://github.com/Udayraj123/AndroidOMRHelper): 
-<p align="center">
-	<a href="https://github.com/Udayraj123/AndroidOMRHelper">
-		<img height="350" src="https://raw.githubusercontent.com/wiki/Udayraj123/OMRChecker/extras/Progress/2019-04-26/images/app_flow.PNG">
-	</a>
-</p>
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/Udayraj123/OMRChecker.svg)](https://starchart.cc/Udayraj123/OMRChecker)
-
-### Ways to contribute:
-- Help OMRChecker reach more people by giving a star! 
-
-  The Goal is to reach top position for the [OMR Topic](https://github.com/topics/omr)
-
-- If this project saved you large costs on OMR Software licenses, or saved efforts to make one. Consider donating an amount of your choice below: 
-  - [**Paypal:**](https://www.paypal.me/Udayraj123/500) 
-  	
-	[![paypal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.me/Udayraj123/500)
-  - [**Buy Me A Coffee ☕**](https://www.buymeacoffee.com/Udayraj123)
-
-- Join the [Discord](https://discord.gg/qFv2Vqf) community to help others with using OMRChecker
-
-<!-- ![☕](https://miro.medium.com/fit/c/256/256/1*br7aoq_JVfxeg73x5tF_Sw.png) -->
-<!-- [![paypal.me](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5BNNK7AVFVH8&source=url) -->
-<!-- https://www.amazon.in/hz/wishlist/ls/3V0TDQBI3T8IL -->
-
+This is a fork of work found [here](https://github.com/Udayraj123/OMRChecker).  
+Most of the code was written by [Udayraj Deshmukh](https://github.com/Udayraj123) and other people who are cited in the original project's [readme](https://github.com/Udayraj123/OMRChecker#readme) doc. Props respect to the clever people who made this thing real. 
 
 ### License 
 [![GitHub license](https://img.shields.io/github/license/Udayraj123/OMRChecker.svg)](https://github.com/Udayraj123/OMRChecker/blob/master/LICENSE)
@@ -491,4 +448,3 @@ This is free software, and you are welcome to redistribute it under certain cond
 ```
 For more details see [LICENSE](https://github.com/Udayraj123/OMRChecker/blob/master/LICENSE). 
 
-*Find OMRChecker on* [***Product Hunt***](https://www.producthunt.com/posts/omr-checker/) **|** [***Hacker News***](https://news.ycombinator.com/item?id=20420602) **|** [***Reddit***](https://www.reddit.com/r/computervision/comments/ccbj6f/omrchecker_grade_exams_using_python_and_opencv/) **|** [***Swyya***](https://www.swyya.com/projects/omrchecker) **|** [**Discord**](https://discord.gg/qFv2Vqf)
